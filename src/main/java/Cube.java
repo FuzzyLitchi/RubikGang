@@ -1,25 +1,32 @@
 import processing.core.PApplet;
 
-public class Cube {
+class Cube {
     Face[] faces;
 
     Cube() {
         faces = new Face[] {
-                new Face(Face.Colour.WHITE),
-                new Face(Face.Colour.YELLOW),
-                new Face(Face.Colour.GREEN),
-                new Face(Face.Colour.BLUE),
-                new Face(Face.Colour.RED),
-                new Face(Face.Colour.ORANGE),
+            new Face(Colour.WHITE),  // Up
+            new Face(Colour.YELLOW), // Down
+            new Face(Colour.GREEN),  // Left
+            new Face(Colour.BLUE),   // Right
+            new Face(Colour.RED),    // Front
+            new Face(Colour.ORANGE), // Back
         };
     }
 
+    final static int size = 3*Face.size;
     void draw(PApplet processing) {
-        processing.beginShape(processing.POINTS);
-        processing.vertex(0, 0,0);
-        processing.vertex(100,0,0);
-        processing.vertex(100,100,0);
-        processing.vertex(0,100,0);
-        processing.endShape(processing.CLOSE);
+        // Up side
+        faces[0].draw(size, 0, processing);
+        // Down side
+        faces[1].draw(size, 2*size, processing);
+        // Left side
+        faces[2].draw(0, size, processing);
+        // Right side
+        faces[3].draw(2*size, size, processing);
+        // Front side
+        faces[4].draw(size, size, processing);
+        // Back side
+        faces[5].draw(3*size, size, processing);
     }
 }

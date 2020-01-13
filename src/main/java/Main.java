@@ -1,5 +1,4 @@
 import processing.core.PApplet;
-import processing.opengl.PGraphics3D;
 
 public class Main extends PApplet {
     Cube cube = new Cube();
