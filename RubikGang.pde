@@ -20,8 +20,10 @@ void draw() {
         }
 
         i++;
-        println(move);
+        print(move);
         cube.doMove(move);
+        print(" ");
+        println(cube.isSolved());
     }
 
     background(64);

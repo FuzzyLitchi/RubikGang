@@ -10,6 +10,15 @@ class Cubie {
 
     Cubie() {}
 
+    boolean equals(Cubie other) {
+        return this.U == other.U &&
+            this.D == other.D &&
+            this.L == other.L &&
+            this.R == other.R &&
+            this.F == other.F &&
+            this.B == other.B;
+    }
+
     void rotate(Move move) {
         switch (move) {
             case U:
@@ -104,8 +113,7 @@ class Cubie {
         throw new IllegalArgumentException("Oof");
     }
 
-    // Debug print
-    void print() {
+    public String toString() {
         // Prints cubie as 2d unfolding of a cube
         // U
         //LFRB
@@ -125,10 +133,10 @@ class Cubie {
         string += ' ';
         string += checkedIntoChar(D);
         
-        System.out.println(string);
+        return string;
     }
 
-    char checkedIntoChar(Colour c) {
+    static char checkedIntoChar(Colour c) {
         if (c == null) {
             return '?';
         } else {

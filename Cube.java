@@ -59,6 +59,20 @@ class Cube {
         }
     }
 
+    boolean isSolved() {
+        return this.equals(new Cube());
+    }
+
+    boolean equals(Cube other) {
+        for (int i = 0; i < 27; i++) {
+            if (!this.cubies[i].equals(other.cubies[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     void doMove(Move move) {
         Coordinates[] corners = move.corners();
         Coordinates[] edges = move.edges();
