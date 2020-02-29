@@ -10,6 +10,47 @@ class Cubie {
 
     Cubie() {}
 
+    void rotate(Move move) {
+        switch (move) {
+            case U:
+                rotateU(1);
+                break;
+            case Up:
+                rotateU(-1);
+                break;
+            case D:
+                rotateU(-1);
+                break;
+            case Dp:
+                rotateU(1);
+                break;
+            case L:
+                rotateL(1);
+                break;
+            case Lp:
+                rotateL(-1);
+                break;
+            case R:
+                rotateL(-1);
+                break;
+            case Rp:
+                rotateL(1);
+                break;
+            case F:
+                rotateF(1);
+                break;
+            case Fp:
+                rotateF(-1);
+                break;
+            case B:
+                rotateF(1);
+                break;
+            case Bp:
+                rotateF(-1);
+                break;
+        }
+    }
+
     void rotateF(int n) {
         if (n != -1 && n != 1) {
             throw new IllegalArgumentException("n has to be 1 or -1");

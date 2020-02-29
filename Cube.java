@@ -1,3 +1,4 @@
+import java.util.*;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -6,8 +7,12 @@ class Cube {
     Cubie[] cubies = new Cubie[27];
 
     // Helper functions for handing coordinates.
-    Cubie getCubieFromCoordinate(Coordinates c) {
+    Cubie getCubieFromCoordinates(Coordinates c) {
         return cubies[c.x+c.y*3+c.z*9];
+    }
+
+    void setCubieFromCoordinates(Coordinates c, Cubie cubie) {
+        cubies[c.x+c.y*3+c.z*9] = cubie;
     }
 
     // This constructor creates a standard solved rubiks cube.
@@ -19,38 +24,91 @@ class Cube {
 
         // Upper and white face
         for (Coordinates coords : Face.coordsFromSide(Side.U)) {
-            Cubie cubie = getCubieFromCoordinate(coords);
+            Cubie cubie = getCubieFromCoordinates(coords);
             cubie.U = Colour.WHITE;
         }
         
         // Down and yellow face
         for (Coordinates coords : Face.coordsFromSide(Side.D)) {
-            Cubie cubie = getCubieFromCoordinate(coords);
+            Cubie cubie = getCubieFromCoordinates(coords);
             cubie.D = Colour.YELLOW;
         }
 
         // Left and green face
         for (Coordinates coords : Face.coordsFromSide(Side.L)) {
-            Cubie cubie = getCubieFromCoordinate(coords);
+            Cubie cubie = getCubieFromCoordinates(coords);
             cubie.L = Colour.GREEN;
         }
 
         // Right and blue face
         for (Coordinates coords : Face.coordsFromSide(Side.R)) {
-            Cubie cubie = getCubieFromCoordinate(coords);
+            Cubie cubie = getCubieFromCoordinates(coords);
             cubie.R = Colour.BLUE;
         }
 
         // Front and red face
         for (Coordinates coords : Face.coordsFromSide(Side.F)) {
-            Cubie cubie = getCubieFromCoordinate(coords);
+            Cubie cubie = getCubieFromCoordinates(coords);
             cubie.F = Colour.RED;
         }
 
         // Back and orange face
         for (Coordinates coords : Face.coordsFromSide(Side.B)) {
-            Cubie cubie = getCubieFromCoordinate(coords);
+            Cubie cubie = getCubieFromCoordinates(coords);
             cubie.B = Colour.ORANGE;
+        }
+    }
+
+    void doMove(Move move) {
+        Coordinates[] corners = move.corners();
+        Coordinates[] edges = move.edges();
+
+        // Update orientation of cubies
+        for (Coordinates coord : corners) {
+            getCubieFromCoordinates(coord).rotate(move);
+        }
+        for (Coordinates coord : edges) {
+            getCubieFromCoordinates(coord).rotate(move);
+        }
+
+        // for (int i = 0; i < 4; i++) {
+        //     String string = new String();
+        //     string += from[i].toString();
+        //     string += " -> ";
+        //     string += to[i].toString();
+
+        //     System.out.println(string);
+        // }
+        
+        // Update position of cubies
+        // Starting with corners
+        Coordinates[] from = corners;
+        Coordinates[] to = corners.clone();
+        Collections.rotate(Arrays.asList(from), move.isPrime() ? -1 : 1);
+        
+
+        Cubie[] cubies = new Cubie[4];
+        for (int i = 0; i < 4; i++) {
+            cubies[i] = getCubieFromCoordinates(from[i]);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            setCubieFromCoordinates(to[i], cubies[i]);
+        }
+
+        // Then with edges
+        from = edges;
+        to = edges.clone();
+        Collections.rotate(Arrays.asList(from), move.isPrime() ? -1 : 1);
+        
+
+        cubies = new Cubie[4];
+        for (int i = 0; i < 4; i++) {
+            cubies[i] = getCubieFromCoordinates(from[i]);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            setCubieFromCoordinates(to[i], cubies[i]);
         }
     }
 
@@ -75,7 +133,7 @@ class Cube {
     // function to draw a single face
     void drawFace(PApplet processing, Side side, int dx, int dy) {
         for (Coordinates coords : Face.coordsFromSide(side)) {
-            Cubie cubie = getCubieFromCoordinate(coords);
+            Cubie cubie = getCubieFromCoordinates(coords);
 
             // Calculate x and y position on the 2d plane.
             int x = 0;
@@ -107,7 +165,16 @@ class Cube {
                     break;
             }
 
-            RGB rgb = cubie.getColourOfSide(side).intoRGB();
+            Colour colour = cubie.getColourOfSide(side);
+
+            RGB rgb;
+            if (colour == null) {
+                // colour being null means that this side of
+                // the cubie doesn't exist. This should never happen.
+                rgb = new RGB(255, 0, 255);
+            } else {
+                rgb = colour.intoRGB();
+            }
             processing.fill(rgb.red, rgb.green, rgb.blue);
             processing.rect(x+dx, y+dy, cubieSize, cubieSize);
         }
