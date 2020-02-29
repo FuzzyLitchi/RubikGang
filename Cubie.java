@@ -43,10 +43,10 @@ class Cubie {
                 rotateF(-1);
                 break;
             case B:
-                rotateF(1);
+                rotateF(-1);
                 break;
             case Bp:
-                rotateF(-1);
+                rotateF(1);
                 break;
         }
     }

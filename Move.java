@@ -46,6 +46,25 @@ enum Move {
     B,  // Back
     Bp; // Back prime
 
+    static Move fromInt(int n) {
+        switch (n) {
+            case 0: return Move.U;
+            case 1: return Move.Up;
+            case 2: return Move.D;
+            case 3: return Move.Dp;
+            case 4: return Move.L;
+            case 5: return Move.Lp;
+            case 6: return Move.R;
+            case 7: return Move.Rp;
+            case 8: return Move.F;
+            case 9: return Move.Fp;
+            case 10: return Move.B;
+            case 11: return Move.Bp;
+        }
+
+        throw new IllegalArgumentException("Integer has to be between 0 and 11 (inclusive)");
+    }
+
     boolean isPrime() {
         switch (this) {
             case U:
@@ -81,19 +100,44 @@ enum Move {
                 };
             case D:
             case Dp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(2, 2, 1),
+                    new Coordinates(1, 2, 2),
+                    new Coordinates(0, 2, 1),
+                    new Coordinates(1, 2, 0)
+                };
             case L:
             case Lp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(0, 0, 1),
+                    new Coordinates(0, 1, 0),
+                    new Coordinates(0, 2, 1),
+                    new Coordinates(0, 1, 2)
+                };
             case R:
             case Rp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(2, 1, 2),
+                    new Coordinates(2, 2, 1),
+                    new Coordinates(2, 1, 0),
+                    new Coordinates(2, 0, 1)
+                };
             case F:
             case Fp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(0, 1, 0),
+                    new Coordinates(1, 0, 0),
+                    new Coordinates(2, 1, 0),
+                    new Coordinates(1, 2, 0)
+                };
             case B:
             case Bp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(1, 2, 2),
+                    new Coordinates(2, 1, 2),
+                    new Coordinates(1, 0, 2),
+                    new Coordinates(0, 1, 2)
+                };
         }
 
         throw new IllegalArgumentException("Move has to be one of UDLRFB.");
@@ -113,19 +157,44 @@ enum Move {
                 };
             case D:
             case Dp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(2, 2, 0),
+                    new Coordinates(2, 2, 2),
+                    new Coordinates(0, 2, 2),
+                    new Coordinates(0, 2, 0)
+                };
             case L:
             case Lp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(0, 0, 0),
+                    new Coordinates(0, 2, 0),
+                    new Coordinates(0, 2, 2),
+                    new Coordinates(0, 0, 2)
+                };
             case R:
             case Rp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(2, 0, 2),
+                    new Coordinates(2, 2, 2),
+                    new Coordinates(2, 2, 0),
+                    new Coordinates(2, 0, 0)
+                };
             case F:
             case Fp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(0, 0, 0),
+                    new Coordinates(2, 0, 0),
+                    new Coordinates(2, 2, 0),
+                    new Coordinates(0, 2, 0)
+                };
             case B:
             case Bp:
-                return null;
+                return new Coordinates[]{
+                    new Coordinates(0, 2, 2),
+                    new Coordinates(2, 2, 2),
+                    new Coordinates(2, 0, 2),
+                    new Coordinates(0, 0, 2)
+                };
         }
 
         throw new IllegalArgumentException("Move has to be one of UDLRFB.");

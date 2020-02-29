@@ -9,13 +9,19 @@ void setup() {
     // hint(ENABLE_DEPTH_SORT);
 }
 
+int i = 0;
 void draw() {
-    if (frameCount == 60) {
-        cube.doMove(Move.U);
-    }
+    if (frameCount%30 == 0) {
+        Move move;
+        if (i < 12) {
+            move = Move.fromInt(i);
+        } else {
+            move = Move.fromInt((int) random(0, 12));
+        }
 
-    if (frameCount == 120) {
-        cube.doMove(Move.Up);
+        i++;
+        println(move);
+        cube.doMove(move);
     }
 
     background(64);
