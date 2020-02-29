@@ -18,6 +18,19 @@ enum Colour {
 
         return new RGB(255, 0, 255);
     }
+
+    char intoChar() {
+        switch (this) {
+            case RED: return 'R';
+            case GREEN: return 'G';
+            case BLUE: return 'B';
+            case YELLOW: return 'Y';
+            case WHITE: return 'W';
+            case ORANGE: return 'O';
+        }
+
+        return '!';
+    }
 }
 
 class RGB {

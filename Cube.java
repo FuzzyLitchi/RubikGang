@@ -2,84 +2,67 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 class Cube {
-    Face[] faces;
+    // 3x3x3 cubies
+    Cubie[] cubies = new Cubie[27];
 
+    // Helper functions for handing coordinates.
+    Cubie getCubieFromCoordinate(Coordinates c) {
+        return cubies[c.x+c.y*3+c.z*9];
+    }
+
+    // This constructor creates a standard solved rubiks cube.
     Cube() {
-        faces = new Face[] {
-            new Face(Colour.WHITE),  // Up
-            new Face(Colour.YELLOW), // Down
-            new Face(Colour.GREEN),  // Left
-            new Face(Colour.BLUE),   // Right
-            new Face(Colour.RED),    // Front
-            new Face(Colour.ORANGE), // Back
-        };
+        // We create a cubie for every part of the cube.
+        for (int i = 0; i < 27; i++) {
+            cubies[i] = new Cubie();
+        }
+
+        // Upper and white face
+        for (Coordinates coords : Face.coordsFromSide(Side.U)) {
+            Cubie cubie = getCubieFromCoordinate(coords);
+            cubie.U = Colour.WHITE;
+        }
+        
+        // Bottom and yellow face
+        for (Coordinates coords : Face.coordsFromSide(Side.B)) {
+            Cubie cubie = getCubieFromCoordinate(coords);
+            cubie.B = Colour.YELLOW;
+        }
+
+        // Left and green face
+        for (Coordinates coords : Face.coordsFromSide(Side.L)) {
+            Cubie cubie = getCubieFromCoordinate(coords);
+            cubie.L = Colour.GREEN;
+        }
+
+        // Right and blue face
+        for (Coordinates coords : Face.coordsFromSide(Side.R)) {
+            Cubie cubie = getCubieFromCoordinate(coords);
+            cubie.R = Colour.BLUE;
+        }
+
+        // Front and red face
+        for (Coordinates coords : Face.coordsFromSide(Side.F)) {
+            Cubie cubie = getCubieFromCoordinate(coords);
+            cubie.F = Colour.RED;
+        }
+
+        // Back and orange face
+        for (Coordinates coords : Face.coordsFromSide(Side.B)) {
+            Cubie cubie = getCubieFromCoordinate(coords);
+            cubie.B = Colour.ORANGE;
+        }
     }
 
-    final static int size = 3*Face.size;
-    void draw(PApplet processing) {
-        // Up side
-        faces[0].draw(size, 0, processing);
-        // Down side
-        faces[1].draw(size, 2*size, processing);
-        // Left side
-        faces[2].draw(0, size, processing);
-        // Right side
-        faces[3].draw(2*size, size, processing);
-        // Front side
-        faces[4].draw(size, size, processing);
-        // Back side
-        faces[5].draw(3*size, size, processing);
-    }
-
-    // Recieves center of cube, pos, and two rotation informations.
-    void draw3d(PVector pos, float longtitude, float latitude, PApplet processing) {
-        processing.pushMatrix();
-        processing.translate(pos.x, pos.y, pos.z);
-        processing.rotateY(longtitude);
-        processing.rotateX(latitude);
-
-        // Up side
-        faces[0].draw3d(
-            new PVector(-size/2, -size/2, -size/2),
-            new PVector(Face.size, 0, 0),
-            new PVector(0, 0, Face.size),
-            processing
-        );
-        // Down side
-        faces[1].draw3d(
-            new PVector(-size/2, size/2, size/2),
-            new PVector(Face.size, 0, 0),
-            new PVector(0, 0, -Face.size),
-            processing
-        );
-        // Left side
-        faces[2].draw3d(
-            new PVector(-size/2, -size/2, -size/2),
-            new PVector(0, 0, Face.size),
-            new PVector(0, Face.size, 0),
-            processing
-        );
-        // Right side
-        faces[3].draw3d(
-            new PVector(size/2, -size/2, size/2),
-            new PVector(0, Face.size, 0),
-            new PVector(0, 0, -Face.size),
-            processing
-        );
-        // Front side
-        faces[4].draw3d(
-            new PVector(-size/2, -size/2, size/2),
-            new PVector(Face.size, 0, 0),
-            new PVector(0, Face.size, 0),
-            processing
-        );
-        // Back side
-        faces[5].draw3d(
-            new PVector(size/2, -size/2, -size/2),
-            new PVector(-Face.size, 0, 0),
-            new PVector(0, Face.size, 0),
-            processing
-        );
-        processing.popMatrix();
+    final static int size = 32;
+    // 2d
+    void drawFace(PApplet processing, Side side) {
+        for (Coordinates coords : Face.coordsFromSide(side)) {
+            Cubie cubie = getCubieFromCoordinate(coords);
+            
+            RGB rgb = cubie.getColourOfSide(side).intoRGB();
+            processing.fill(rgb.red, rgb.green, rgb.blue);
+            processing.rect(coords.x*size, coords.y*size, size, size);
+        }
     }
 }
