@@ -12,5 +12,5 @@ void setup() {
 
 void draw() {
     background(64);
-    cube.drawFace(this, Side.F);
+    cube.draw(this);
 }

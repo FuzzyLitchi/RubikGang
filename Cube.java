@@ -23,10 +23,10 @@ class Cube {
             cubie.U = Colour.WHITE;
         }
         
-        // Bottom and yellow face
-        for (Coordinates coords : Face.coordsFromSide(Side.B)) {
+        // Down and yellow face
+        for (Coordinates coords : Face.coordsFromSide(Side.D)) {
             Cubie cubie = getCubieFromCoordinate(coords);
-            cubie.B = Colour.YELLOW;
+            cubie.D = Colour.YELLOW;
         }
 
         // Left and green face
@@ -54,15 +54,62 @@ class Cube {
         }
     }
 
-    final static int size = 32;
-    // 2d
-    void drawFace(PApplet processing, Side side) {
+    // 2d rendering
+    final static int cubieSize = 32;
+    final static int faceSize = 3*cubieSize;
+    void draw(PApplet processing) {
+        // Up side
+        drawFace(processing, Side.U, faceSize, 0);
+        // Down side
+        drawFace(processing, Side.D, faceSize, 2*faceSize);
+        // Left side
+        drawFace(processing, Side.L, 0, faceSize);
+        // Right side
+        drawFace(processing, Side.R, 2*faceSize, faceSize);
+        // Front side
+        drawFace(processing, Side.F, faceSize, faceSize);
+        // Back side
+        drawFace(processing, Side.B, 3*faceSize, faceSize);
+    }
+
+    // function to draw a single face
+    void drawFace(PApplet processing, Side side, int dx, int dy) {
         for (Coordinates coords : Face.coordsFromSide(side)) {
             Cubie cubie = getCubieFromCoordinate(coords);
-            
+
+            // Calculate x and y position on the 2d plane.
+            int x = 0;
+            int y = 0;
+            switch (side) {
+                case U:
+                    x = coords.x * cubieSize;
+                    y = (2-coords.z) * cubieSize;
+                    break;
+                case D:
+                    x = coords.x * cubieSize;
+                    y = coords.z * cubieSize;
+                    break;
+                case L:
+                    x = (2-coords.z) * cubieSize;
+                    y = coords.y * cubieSize;
+                    break;
+                case R:
+                    x = coords.z * cubieSize;
+                    y = coords.y * cubieSize;
+                    break;
+                case F:
+                    x = coords.x * cubieSize;
+                    y = coords.y * cubieSize;
+                    break;
+                case B:
+                    x = (2-coords.x) * cubieSize;
+                    y = coords.y * cubieSize;
+                    break;
+            }
+
             RGB rgb = cubie.getColourOfSide(side).intoRGB();
             processing.fill(rgb.red, rgb.green, rgb.blue);
-            processing.rect(coords.x*size, coords.y*size, size, size);
+            processing.rect(x+dx, y+dy, cubieSize, cubieSize);
         }
     }
 }
