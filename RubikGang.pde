@@ -10,21 +10,28 @@ void setup() {
 }
 
 boolean showHelp = true;
+boolean do3D = true;
 
 void draw() {
     // Render help screen
     if (showHelp) {
         background(0);
-        textSize(20);
+        textSize(19);
         fill(255);
 
-        text("To rotate the faces of the cube press one of\nthe following keys.\nU => Up\nD => Down\nF => Front\nB => Back\nL => Left\nR => Right\nHold shift to rotate counter clockwise instead\nof clockwise.\n\nPress Shift + S to scramble the cube.\nPress Enter to exit the help menu\nand H to return at a later time.", 20, 40);
+        text("To rotate the faces of the cube press one of\nthe following keys.\nU => Up\nD => Down\nF => Front\nB => Back\nL => Left\nR => Right\nHold shift to rotate counter clockwise instead\nof clockwise.\n\nPress Shift + S to scramble the cube.\nPress J to switch between 3D and 2D.\nPress Enter to exit the help menu\nand H to return at a later time.", 20, 40);
 
         // Don't render the rest
         return;
     }
 
     background(64);
+
+    if (!do3D) {
+        cube.draw(this);
+        return;
+    }
+
     // Fix z-axis to grow as depth
     scale(1, 1, -1);
 
@@ -118,6 +125,10 @@ void keyPressed() {
         case 'H':
             // Show help
             showHelp = true;
+            return;
+        case 'j':
+        case 'J':
+            do3D = !do3D;
             return;
         default:
             return;
