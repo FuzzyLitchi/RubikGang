@@ -9,23 +9,61 @@ void setup() {
     // hint(ENABLE_DEPTH_SORT);
 }
 
-int i = 0;
 void draw() {
-    if (frameCount%30 == 0) {
-        Move move;
-        if (i < 12) {
-            move = Move.fromInt(i);
-        } else {
-            move = Move.fromInt((int) random(0, 12));
-        }
-
-        i++;
-        print(move);
-        cube.doMove(move);
-        print(" ");
-        println(cube.isSolved());
-    }
-
     background(64);
     cube.draw(this);
+}
+
+void keyPressed() {
+    Move move;
+
+    // Match keys to moves. Shift + key is prime moves.
+    switch (key) {
+        case 'u':
+            move = Move.U;
+            break;
+        case 'U':
+            move = Move.Up;
+            break;
+        case 'd':
+            move = Move.D;
+            break;
+        case 'D':
+            move = Move.Dp;
+            break;
+        case 'l':
+            move = Move.L;
+            break;
+        case 'L':
+            move = Move.Lp;
+            break;
+        case 'r':
+            move = Move.R;
+            break;
+        case 'R':
+            move = Move.Rp;
+            break;
+        case 'f':
+            move = Move.F;
+            break;
+        case 'F':
+            move = Move.Fp;
+            break;
+        case 'b':
+            move = Move.B;
+            break;
+        case 'B':
+            move = Move.Bp;
+            break;
+        case 'S':
+            // Scramble
+            for (int i = 0; i < 50; i++) {
+                cube.doMove(Move.fromInt((int) random(0, 12)));
+            }
+            return;
+        default:
+            return;
+    }
+
+    cube.doMove(move);
 }
