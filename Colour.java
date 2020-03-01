@@ -36,9 +36,9 @@ enum Colour {
 }
 
 class RGB {
-    int red;
-    int green;
-    int blue;
+    public int red;
+    public int green;
+    public int blue;
 
     RGB(int red, int green, int blue) {
         this.red = red;
