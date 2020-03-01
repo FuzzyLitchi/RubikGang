@@ -3,14 +3,14 @@ import processing.core.PApplet;
 
 class Cube {
     // 3x3x3 cubies
-    Cubie[] cubies = new Cubie[27];
+    private Cubie[] cubies = new Cubie[27];
 
     // Helper functions for handing coordinates.
-    Cubie getCubieFromCoordinates(Coordinates c) {
+    private Cubie getCubieFromCoordinates(Coordinates c) {
         return cubies[c.x+c.y*3+c.z*9];
     }
 
-    void setCubieFromCoordinates(Coordinates c, Cubie cubie) {
+    private void setCubieFromCoordinates(Coordinates c, Cubie cubie) {
         cubies[c.x+c.y*3+c.z*9] = cubie;
     }
 
@@ -58,11 +58,11 @@ class Cube {
         }
     }
 
-    boolean isSolved() {
+    public boolean isSolved() {
         return this.equals(new Cube());
     }
 
-    boolean equals(Cube other) {
+    public boolean equals(Cube other) {
         for (int i = 0; i < 27; i++) {
             if (!this.cubies[i].equals(other.cubies[i])) {
                 return false;
@@ -72,7 +72,8 @@ class Cube {
         return true;
     }
 
-    void doMove(Move move) {
+    // Applies a given move to the Rubik's Cube.
+    public void doMove(Move move) {
         Coordinates[] corners = move.corners();
         Coordinates[] edges = move.edges();
 
@@ -83,15 +84,6 @@ class Cube {
         for (Coordinates coord : edges) {
             getCubieFromCoordinates(coord).rotate(move);
         }
-
-        // for (int i = 0; i < 4; i++) {
-        //     String string = new String();
-        //     string += from[i].toString();
-        //     string += " -> ";
-        //     string += to[i].toString();
-
-        //     System.out.println(string);
-        // }
         
         // Update position of cubies
         // Starting with corners
@@ -128,7 +120,7 @@ class Cube {
     // 2d rendering
     final static int cubieSize = 32;
     final static int faceSize = 3*cubieSize;
-    void draw(PApplet processing) {
+    public void draw(PApplet processing) {
         // Up side
         drawFace(processing, Side.U, faceSize, 0);
         // Down side
@@ -144,7 +136,7 @@ class Cube {
     }
 
     // function to draw a single face
-    void drawFace(PApplet processing, Side side, int dx, int dy) {
+    private void drawFace(PApplet processing, Side side, int dx, int dy) {
         for (Coordinates coords : Face.coordsFromSide(side)) {
             Cubie cubie = getCubieFromCoordinates(coords);
 
@@ -194,7 +186,7 @@ class Cube {
     }
 
     // 3D rendering
-    void draw3D(PApplet processing) {
+    public void draw3D(PApplet processing) {
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
                 for (int z = 0; z < 3; z++) {

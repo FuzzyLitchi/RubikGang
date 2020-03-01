@@ -12,6 +12,7 @@ void setup() {
 boolean showHelp = true;
 
 void draw() {
+    // Render help screen
     if (showHelp) {
         background(0);
         textSize(20);
@@ -30,11 +31,14 @@ void draw() {
     // cube.draw(this);
 
     pushMatrix();
+    // Move to middle of screen
     translate(
         width/2,
         height/2,
         0
     );
+
+    // Rotate coordinate system according to mouse.
     rotateY(
         -2*PI*(((float) mouseX/width)-0.5)
     );
@@ -42,6 +46,7 @@ void draw() {
         PI*(((float) mouseY/height)-0.5)
     );
 
+    // Move to top left corner of the cube so it is centered on the screen when rendered.
     translate(
         -Cube.faceSize/2,
         -Cube.faceSize/2,
@@ -54,6 +59,7 @@ void draw() {
 
 void keyPressed() {
     if (showHelp) {
+        // Enter to exit help
         if (key == '\n') {
             showHelp = false;
         }

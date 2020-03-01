@@ -7,7 +7,7 @@ enum Side {
     B; // Back
 
     // Gives the 4 corners of each side. Used for 3d rendering.
-    Coordinates[] asPoints() {
+    public Coordinates[] asPoints() {
         switch(this) {
             case U:
                 return new Coordinates[]{

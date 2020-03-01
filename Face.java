@@ -1,6 +1,8 @@
 // Helper function for interacting with the cube by faces
 class Face {
-    static Coordinates[] coordsFromSide(Side s) {
+
+    // Returns the coordinates for the cubies of a given side.
+    public static Coordinates[] coordsFromSide(Side s) {
         Coordinates[] coords = new Coordinates[9];
 
         switch (s) {

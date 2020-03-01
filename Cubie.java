@@ -2,16 +2,16 @@ import java.util.*;
 import processing.core.PApplet;
 
 class Cubie {
-    Colour U; // Up
-    Colour D; // Down
-    Colour L; // Left
-    Colour R; // Right
-    Colour F; // Front
-    Colour B; // Back
+    public Colour U; // Up
+    public Colour D; // Down
+    public Colour L; // Left
+    public Colour R; // Right
+    public Colour F; // Front
+    public Colour B; // Back
 
     Cubie() {}
 
-    boolean equals(Cubie other) {
+    public boolean equals(Cubie other) {
         return this.U == other.U &&
             this.D == other.D &&
             this.L == other.L &&
@@ -20,7 +20,8 @@ class Cubie {
             this.B == other.B;
     }
 
-    void rotate(Move move) {
+    // Rotates cubie according to a specified move.
+    public void rotate(Move move) {
         switch (move) {
             case U:
                 rotateU(1);
@@ -61,7 +62,8 @@ class Cubie {
         }
     }
 
-    void rotateF(int n) {
+    // Helper functions to rotate the cubie in the three spacial dimension
+    private void rotateF(int n) {
         if (n != -1 && n != 1) {
             throw new IllegalArgumentException("n has to be 1 or -1");
         }
@@ -74,7 +76,7 @@ class Cubie {
         L = rotated[3];
     }
 
-    void rotateU(int n) {
+    private void rotateU(int n) {
         if (n != -1 && n != 1) {
             throw new IllegalArgumentException("n has to be 1 or -1");
         }
@@ -87,7 +89,7 @@ class Cubie {
         R = rotated[3];
     }
     
-    void rotateL(int n) {
+    private void rotateL(int n) {
         if (n != -1 && n != 1) {
             throw new IllegalArgumentException("n has to be 1 or -1");
         }
@@ -101,7 +103,7 @@ class Cubie {
     }
 
     // Gets colour of given side. Returns null if side doesn't exist
-    Colour getColourOfSide(Side s) {
+    public Colour getColourOfSide(Side s) {
         switch (s) {
             case U: return this.U;
             case D: return this.D;
@@ -114,6 +116,7 @@ class Cubie {
         throw new IllegalArgumentException("Oof");
     }
 
+    // Debug printing
     public String toString() {
         // Prints cubie as 2d unfolding of a cube
         // U
@@ -137,7 +140,8 @@ class Cubie {
         return string;
     }
 
-    static char checkedIntoChar(Colour c) {
+    // Helper function for debug printing
+    private static char checkedIntoChar(Colour c) {
         if (c == null) {
             return '?';
         } else {
@@ -145,7 +149,7 @@ class Cubie {
         }
     }
 
-    void draw3D(PApplet processing, Coordinates coords) {
+    public void draw3D(PApplet processing, Coordinates coords) {
         // Attempt to draw each side
         for (Side side : Side.values()) {
             Colour colour = getColourOfSide(side);
@@ -160,6 +164,7 @@ class Cubie {
             processing.fill(rgb.red, rgb.green, rgb.blue);
             processing.beginShape();
 
+            // Draw a vertex between each point.
             for (Coordinates point : side.asPoints()) {
                 processing.vertex(
                     (coords.x+point.x)*Cube.cubieSize,

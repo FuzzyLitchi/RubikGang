@@ -6,7 +6,8 @@ enum Colour {
     WHITE,
     ORANGE;
 
-    RGB intoRGB() {
+    // Get colour as rgb value. Used for rendering.
+    public RGB intoRGB() {
         switch (this) {
             case RED: return new RGB(255, 0, 0);
             case GREEN: return new RGB(0, 255, 0);
@@ -19,7 +20,8 @@ enum Colour {
         return new RGB(255, 0, 255);
     }
 
-    char intoChar() {
+    // Used for debug printing
+    public char intoChar() {
         switch (this) {
             case RED: return 'R';
             case GREEN: return 'G';

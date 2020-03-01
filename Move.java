@@ -5,9 +5,9 @@
 // is depth. Thereby the cube and processing's coordinates have the same
 // orientation. 
 class Coordinates {
-    int x;
-    int y;
-    int z;
+    public int x;
+    public int y;
+    public int z;
 
     Coordinates(int x, int y, int z) {
         this.x = x;
@@ -15,6 +15,7 @@ class Coordinates {
         this.z = z;
     }
 
+    // Used for debug printing
     public String toString() {
         String string = new String();
         string += '(';
@@ -46,7 +47,8 @@ enum Move {
     B,  // Back
     Bp; // Back prime
 
-    static Move fromInt(int n) {
+    // Construct Move based on an int. Used for random move generation.
+    public static Move fromInt(int n) {
         switch (n) {
             case 0: return Move.U;
             case 1: return Move.Up;
@@ -65,7 +67,7 @@ enum Move {
         throw new IllegalArgumentException("Integer has to be between 0 and 11 (inclusive)");
     }
 
-    boolean isPrime() {
+    public boolean isPrime() {
         switch (this) {
             case U:
             case D:
@@ -88,7 +90,7 @@ enum Move {
 
     // Returns the coordinates for the 4 edge cubies that are 
     // affected by this move in clockewise direction.
-    Coordinates[] edges() {
+    public Coordinates[] edges() {
         switch (this) {
             case U:
             case Up:
@@ -145,7 +147,7 @@ enum Move {
 
     // Returns the coordinates for the 4 corner cubies that are
     // affected by this move in clockwise direction.
-    Coordinates[] corners() {
+    public Coordinates[] corners() {
         switch (this) {
             case U:
             case Up:
