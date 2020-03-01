@@ -15,7 +15,28 @@ void draw() {
     scale(1, 1, -1);
 
     // cube.draw(this);
+
+    pushMatrix();
+    translate(
+        width/2,
+        height/2,
+        0
+    );
+    rotateY(
+        -2*PI*(((float) mouseX/width)-0.5)
+    );
+    rotateX(
+        PI*(((float) mouseY/height)-0.5)
+    );
+
+    translate(
+        -Cube.faceSize/2,
+        -Cube.faceSize/2,
+        -Cube.faceSize/2
+    );
+
     cube.draw3D(this);
+    popMatrix();
 }
 
 void keyPressed() {
