@@ -2,16 +2,20 @@ Cube cube = new Cube();
 
 void setup() {
     // 2D
-    size(500, 500);
+    // size(500, 500);
 
     // 3D
-    // size(500, 500, P3D);
-    // hint(ENABLE_DEPTH_SORT);
+    size(500, 500, P3D);
+    hint(ENABLE_DEPTH_SORT);
 }
 
 void draw() {
     background(64);
-    cube.draw(this);
+    // Fix z-axis to grow as depth
+    scale(1, 1, -1);
+
+    // cube.draw(this);
+    cube.draw3D(this);
 }
 
 void keyPressed() {

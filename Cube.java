@@ -1,6 +1,5 @@
 import java.util.*;
 import processing.core.PApplet;
-import processing.core.PVector;
 
 class Cube {
     // 3x3x3 cubies
@@ -191,6 +190,20 @@ class Cube {
             }
             processing.fill(rgb.red, rgb.green, rgb.blue);
             processing.rect(x+dx, y+dy, cubieSize, cubieSize);
+        }
+    }
+
+    // 3D rendering
+    void draw3D(PApplet processing) {
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                for (int z = 0; z < 3; z++) {
+                    Coordinates coords = new Coordinates(x, y, z);
+
+                    Cubie cubie = getCubieFromCoordinates(coords);
+                    cubie.draw3D(processing, coords);
+                }
+            }
         }
     }
 }

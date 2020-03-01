@@ -1,4 +1,5 @@
 import java.util.*;
+import processing.core.PApplet;
 
 class Cubie {
     Colour U; // Up
@@ -141,6 +142,33 @@ class Cubie {
             return '?';
         } else {
             return c.intoChar();
+        }
+    }
+
+    void draw3D(PApplet processing, Coordinates coords) {
+        // Attempt to draw each side
+        for (Side side : Side.values()) {
+            Colour colour = getColourOfSide(side);
+            
+            if (colour == null) {
+                // Side doesn't exist, skip
+                continue;
+            }
+
+            // Render
+            RGB rgb = colour.intoRGB();
+            processing.fill(rgb.red, rgb.green, rgb.blue);
+            processing.beginShape();
+
+            for (Coordinates point : side.asPoints()) {
+                processing.vertex(
+                    (coords.x+point.x)*Cube.cubieSize,
+                    (coords.y+point.y)*Cube.cubieSize,
+                    (coords.z+point.z)*Cube.cubieSize
+                );
+            }
+
+            processing.endShape(processing.CLOSE);
         }
     }
 }
